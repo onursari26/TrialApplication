@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Application.Service</AssemblyName>
+    <RootNamespace>Application.Service</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockMount.Core\Application.Core.csproj" />
+    <ProjectReference Include="..\StockMount.Dto\Application.Dto.csproj" />
+    <ProjectReference Include="..\StockMount.Security\Application.Security.csproj" />
+  </ItemGroup>
+
+</Project>
