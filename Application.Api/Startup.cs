@@ -45,11 +45,11 @@ namespace Application.Api
             services.AddMediatR();
 
             if (InMemoryDatabase)
-                services.AddDbContext<StockMountContext>(ops => ops.UseInMemoryDatabase("StockMountDb"));
+                services.AddDbContext<AplicationContext>(ops => ops.UseInMemoryDatabase("AplicationDb"));
             else
-                services.AddDbContext<StockMountContext>(ops => ops.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                services.AddDbContext<AplicationContext>(ops => ops.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<StockMountContext>));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork<AplicationContext>));
 
             services.AddAutoMapper();
 
@@ -109,7 +109,7 @@ namespace Application.Api
 
             using (var service = app.ApplicationServices.CreateScope())
             {
-                var context = service.ServiceProvider.GetService<StockMountContext>();
+                var context = service.ServiceProvider.GetService<AplicationContext>();
 
                 if (!InMemoryDatabase)
                     context.Database.Migrate();

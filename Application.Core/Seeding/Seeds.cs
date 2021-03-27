@@ -1,45 +1,100 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Application.Core.Context;
 using Application.Data.Entities.Concrete;
+using Application.Utility.Hashing;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Application.Core.Seeding
 {
-    public class OrderSeed : IEntityTypeConfiguration<Order>
+    public class Seeds
     {
-        public void Configure(EntityTypeBuilder<Order> builder)
+        public void Seed(AplicationContext context)
         {
-            int j = 10;
+            if (context.User.Any())
+                return;
+
+            string password = "11223344!";
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            context.User.Add(new User
+            {
+                Name = "yazilim",
+                Surname = "Aplication",
+                Email = "yazilim@Application.com",
+                Username = "yazilim@Application.com",
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Avatar = "/assets/images/avatar/avatarset01/avatarset01_01.png",
+            });
+
+            var store = new Store
+            {
+                StoreId = 37814,
+                Name = "Stock Mount",
+                Description = "Stock Mount",
+            };
+
+            context.Store.Add(store);
+
+            var store2 = new Store
+            {
+                StoreId = 37815,
+                Name = "Stock Mount",
+                Description = "Stock Mount",
+            };
+
+            context.Store.Add(store2);
+
+            var store3 = new Store
+            {
+                StoreId = 37816,
+                Name = "Stock Mount",
+                Description = "Stock Mount",
+            };
+
+            context.Store.Add(store3);
+
+            if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                context.Database.OpenConnection();
+                try
+                {
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Store ON;");
+                    context.SaveChanges();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Store OFF;");
+                }
+                finally
+                {
+                    context.Database.CloseConnection();
+                }
+            }
 
             for (int i = 1; i < 101; i++)
             {
                 var order = new Order
                 {
-                    //OrderId = i,
-                    Name = "StockMount",
+                    Name = "Aplication",
                     PersonalIdentification = "11111111111",
-                    Nickname = "StockMount",
+                    Nickname = "Aplication",
                     OrderDate = DateTime.Parse("2020-07-06T11:30:48.403Z"),
                     IntegrationOrderCode = "202847319367",
                     OrderStatus = "Completed",
-                    Fullname = "StockMount",
-                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok StockMount  Çankaya Ankara",
+                    Fullname = "Aplication",
+                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok Aplication  Çankaya Ankara",
                     Telephone = "5320000000",
                     TaxNumber = "11111111111",
                     City = "Ankara",
                     District = "Çankaya",
                     CompanyTitle = null,
-                    StoreId = 37814,
-                    Email = "StockMount",
+                    Store = store,
+                    Email = "Aplication",
                 };
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    //OrderId = i,
-                    //OrderDetailId = j,
-                    StoreId = 37814,
+                    StoreId = store.StoreId,
                     IntegrationProductCode = "112576403",
                     IntegrationOrderDetailId = "37726242",
                     ProductName = "FIRAT Thermo Kauçuk Bezli Sulama Hortumu 1\" - 50 Metre",
@@ -49,8 +104,8 @@ namespace Application.Core.Seeding
                     RawQuantity = 1,
                     Invoiced = true,
                     Unread = false,
-                    DeliveryTitle = "StockMount",
-                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok StockMount  Çankaya Ankara",
+                    DeliveryTitle = "Aplication",
+                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok Aplication  Çankaya Ankara",
                     Telephone = "5320000000",
                     CargoCompany = "Yurtiçi",
                     CargoLabelCode = "600974982644",
@@ -64,13 +119,11 @@ namespace Application.Core.Seeding
                     OrderStatus = "Completed",
                     LastModificationTime = DateTime.Parse("2020-02-27T14:57:40.793"),
                     ProductUnit = "0",
-                }); ;
+                });
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    //OrderId = i,
-                    //OrderDetailId = j + 1,
-                    StoreId = 37814,
+                    StoreId = store.StoreId,
                     IntegrationProductCode = "119072276",
                     IntegrationOrderDetailId = "37726244",
                     ProductName = "WERT 2251 Saatçi Tornavida Seti 6 Parça",
@@ -81,8 +134,8 @@ namespace Application.Core.Seeding
                     TaxRate = 0,
                     Invoiced = true,
                     Unread = false,
-                    DeliveryTitle = "StockMount",
-                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok StockMount  Çankaya Ankara",
+                    DeliveryTitle = "Aplication",
+                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok Aplication  Çankaya Ankara",
                     Telephone = "5320000000",
                     CargoCompany = "Yurtiçi",
                     CargoLabelCode = "600974982644",
@@ -100,9 +153,7 @@ namespace Application.Core.Seeding
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    //OrderId = i,
-                    //OrderDetailId = j + 2,
-                    StoreId = 37814,
+                    StoreId = store.StoreId,
                     IntegrationProductCode = "94191960",
                     IntegrationOrderDetailId = "37726243",
                     ProductName = "CETA FORM 4000M/7ST1 7 Parça Tornavida Takımı - Tornavida Seti",
@@ -112,8 +163,8 @@ namespace Application.Core.Seeding
                     RawQuantity = 1,
                     Invoiced = true,
                     Unread = false,
-                    DeliveryTitle = "StockMount",
-                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok StockMount  Çankaya Ankara",
+                    DeliveryTitle = "Aplication",
+                    Address = "Üniversiteler Mh. Odtü Teknokent Silikon Blok Aplication  Çankaya Ankara",
                     Telephone = "5320000000",
                     CargoCompany = "Yurtiçi",
                     CargoLabelCode = "600974982644",
@@ -129,9 +180,11 @@ namespace Application.Core.Seeding
                     ProductUnit = "0",
                 });
 
-                builder.HasData(order);
+                context.Orders.AddRange(order);
 
             }
+
+            context.SaveChanges();
         }
     }
 }

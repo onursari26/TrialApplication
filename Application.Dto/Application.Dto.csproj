@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockMount.Data\Application.Data.csproj" />
+    <ProjectReference Include="..\Application.Data\Application.Data.csproj" />
   </ItemGroup>
 
 </Project>

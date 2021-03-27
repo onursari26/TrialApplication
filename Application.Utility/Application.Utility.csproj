@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Application.Validation</AssemblyName>
-    <RootNamespace>Application.Validation</RootNamespace>
+    <AssemblyName>Application.Utility</AssemblyName>
+    <RootNamespace>Application.Utility</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.5.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\StockMount.Service\Application.Service.csproj" />
-  </ItemGroup>
-
+  
 </Project>

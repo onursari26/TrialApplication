@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockMount.Core\Application.Core.csproj" />
-    <ProjectReference Include="..\StockMount.Dto\Application.Dto.csproj" />
-    <ProjectReference Include="..\StockMount.Security\Application.Security.csproj" />
+    <ProjectReference Include="..\Application.Core\Application.Core.csproj" />
+    <ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
+    <ProjectReference Include="..\Application.Security\Application.Security.csproj" />
   </ItemGroup>
 
 </Project>

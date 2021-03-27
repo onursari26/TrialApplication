@@ -23,15 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockMount.Core\Application.Core.csproj" />
-    <ProjectReference Include="..\StockMount.Dto\Application.Dto.csproj" />
-    <ProjectReference Include="..\StockMount.Logging\Application.Logging.csproj" />
-    <ProjectReference Include="..\StockMount.Redis\Application.Redis.csproj" />
-    <ProjectReference Include="..\StockMount.Validation\Application.Validation.csproj" />
+    <Folder Include="Logs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logs\" />
+    <ProjectReference Include="..\Application.Core\Application.Core.csproj" />
+    <ProjectReference Include="..\Application.Data\Application.Data.csproj" />
+    <ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
+    <ProjectReference Include="..\Application.Logging\Application.Logging.csproj" />
+    <ProjectReference Include="..\Application.Redis\Application.Redis.csproj" />
+    <ProjectReference Include="..\Application.Service\Application.Service.csproj" />
+    <ProjectReference Include="..\Application.Validation\Application.Validation.csproj" />
   </ItemGroup>
 
 

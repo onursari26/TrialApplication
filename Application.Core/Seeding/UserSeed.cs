@@ -16,7 +16,7 @@ namespace Application.Core.Seeding
             builder.HasData(new User
             {
                 Name = "yazilim",
-                Surname = "stockmount",
+                Surname = "Aplication",
                 Email = "yazilim@Application.com",
                 Username = "yazilim@Application.com",
                 PasswordHash = passwordHash,

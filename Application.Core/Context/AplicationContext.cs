@@ -5,9 +5,9 @@ using Application.Data.Entities.Concrete;
 
 namespace Application.Core.Context
 {
-    public class StockMountContext : DbContext
+    public class AplicationContext : DbContext
     {
-        public StockMountContext(DbContextOptions<StockMountContext> options) : base(options)
+        public AplicationContext(DbContextOptions<AplicationContext> options) : base(options)
         {
         }
 

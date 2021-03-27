@@ -27,8 +27,8 @@ namespace Application.Api.Controllers
         private const string setKey = "setKey";
         private const string hashKey = "hashKey";
 
-        StockMountContext _context;
-        public RedisController(IRedisService redisService, StockMountContext context)
+        AplicationContext _context;
+        public RedisController(IRedisService redisService, AplicationContext context)
         {
             _redisService = redisService;
 

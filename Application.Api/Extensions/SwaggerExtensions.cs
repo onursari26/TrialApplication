@@ -10,7 +10,7 @@ namespace Application.Api.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Adesso Ride Share API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aplication API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", //Name the security scheme
                  new OpenApiSecurityScheme
                  {
