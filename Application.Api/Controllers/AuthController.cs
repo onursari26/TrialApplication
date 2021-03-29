@@ -22,8 +22,8 @@ namespace Application.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/user/dologin")]
-        public async Task<IActionResult> Post([FromBody] UserLoginCommand request)
+        [Route("api/login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginCommand request)
         {
             var user = await _mediator.Send(request);
 

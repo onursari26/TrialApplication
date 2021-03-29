@@ -16,8 +16,8 @@ namespace Application.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/log/get")]
-        public async Task<IActionResult> Get([FromBody] GetLogsQuery request)
+        [Route("api/logs")]
+        public async Task<IActionResult> GetLogs([FromBody] GetLogsQuery request)
         {
             request.FilePath = Startup.ContentRootPath;
 

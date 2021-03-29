@@ -11,7 +11,7 @@ namespace Application.Core.Seeding
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            int j = 10;
+            //int j = 10;
 
             for (int i = 1; i < 101; i++)
             {

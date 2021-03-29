@@ -18,15 +18,15 @@ namespace Application.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/integration/getSales")]
-        public async Task<IActionResult> Get([FromBody] GetOrdersQuery request)
+        [Route("api/orders")]
+        public async Task<IActionResult> GetOrders([FromBody] GetOrdersQuery request)
         {
             return Ok(await _mediator.Send(request));
         }
 
         [HttpPost]
-        [Route("api/integration/getTotalOrderCount")]
-        public async Task<IActionResult> getTotalOrderCount([FromBody] GetOrdersCount request)
+        [Route("api/ordersCount")]
+        public async Task<IActionResult> GetOrdersCount([FromBody] GetOrdersCount request)
         {
             return Ok(await _mediator.Send(request));
         }

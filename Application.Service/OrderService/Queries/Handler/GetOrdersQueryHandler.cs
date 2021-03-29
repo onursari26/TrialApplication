@@ -27,14 +27,14 @@ namespace Application.Service.OrderService.Queries.Handler
         }
         public async Task<ResponseInfo<List<OrderDto>>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-            var orders = _uow.Repository<Order>().Filter(
+            var orders = await _uow.Repository<Order>().PagingAsync(
                 filter: x => x.StoreId == request.StoreId && x.OrderStatus == request.OrderStatus && x.InvoiceStatus == request.InvoiceStatus,
                 orderBy: m => m.OrderBy(x => x.OrderDate),
                 includes: null,
                 //new System.Linq.Expressions.Expression<Func<Order, object>>[1] { x => x.OrderDetails },
                 page: request.Page,
                 pageSize: request.PageSize
-                ).ToList();
+                );
 
             return new ResponseInfo<List<OrderDto>>
             {

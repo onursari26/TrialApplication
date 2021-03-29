@@ -31,19 +31,9 @@ namespace Application.Core.Concrete
             }
         }
 
-        public IQueryable<TEntity> Query()
-        {
-            return Entities.AsQueryable();
-        }
-
         public IQueryable<TEntity> QueryFilter(Expression<Func<TEntity, bool>> predicate)
         {
             return Entities.Where(predicate);
-        }
-
-        public async Task<ICollection<TEntity>> GetAllAsync()
-        {
-            return await Entities.AsNoTracking().ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(object id)
@@ -56,17 +46,9 @@ namespace Application.Core.Concrete
             return await Entities.AsQueryable().Includes(includes).FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes = null)
+        public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes = null)
         {
             return await Entities.Where(predicate).Includes(includes).ToListAsync();
-        }
-
-        private IQueryable<TEntity> Includes(IQueryable<TEntity> query, Expression<Func<TEntity, object>>[] includes = null)
-        {
-            if (includes == null)
-                return query;
-
-            return includes.Aggregate(query, (query, path) => query.Include(path));
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)
@@ -74,7 +56,7 @@ namespace Application.Core.Concrete
             return (await Entities.AddAsync(entity)).Entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public Task<TEntity> UpdateAsync(TEntity entity)
         {
             if (entity == null)
                 return null;
@@ -85,10 +67,10 @@ namespace Application.Core.Concrete
                     property.IsModified = true;
             }
 
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public Task DeleteAsync(TEntity entity)
         {
             EntityEntry entityEntry = _context.Entry(entity);
             if (entityEntry.State != EntityState.Deleted)
@@ -100,6 +82,8 @@ namespace Application.Core.Concrete
                 Entities.Attach(entity);
                 Entities.Remove(entity);
             }
+
+            return Task.CompletedTask;
         }
 
         public async Task<TEntity> DeleteAsync(object id)
@@ -131,7 +115,118 @@ namespace Application.Core.Concrete
             return await Entities.CountAsync();
         }
 
-        public IEnumerable<TEntity> Filter(Expression<Func<TEntity, bool>> filter = null,
+        public async Task<IEnumerable<TEntity>> PagingAsync(Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Expression<Func<TEntity, object>>[] includes = null,
+            int? page = null,
+            int? pageSize = null)
+        {
+            IQueryable<TEntity> query = Entities.AsNoTracking();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            if (includes != null)
+                query = query.Includes(includes);
+
+            if (page != null && pageSize != null)
+                query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Entities.AnyAsync(predicate);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await Entities.AddRangeAsync(entities);
+        }
+
+        public TEntity GetById(object id)
+        {
+            return Entities.Find(id);
+        }
+
+        public TEntity Find(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes = null)
+        {
+            return Entities.AsQueryable().Includes(includes).FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes = null)
+        {
+            return Entities.Where(predicate).Includes(includes).ToList();
+        }
+
+        public TEntity Add(TEntity entity)
+        {
+            return Entities.Add(entity).Entity;
+        }
+
+        public TEntity Update(TEntity entity)
+        {
+            if (entity == null)
+                return null;
+
+            foreach (var property in _context.Entry(entity).Properties)
+            {
+                if (property.OriginalValue != null && !property.OriginalValue.Equals(property.CurrentValue))
+                    property.IsModified = true;
+            }
+
+            return entity;
+        }
+
+        public void Delete(TEntity entity)
+        {
+            EntityEntry entityEntry = _context.Entry(entity);
+            if (entityEntry.State != EntityState.Deleted)
+            {
+                entityEntry.State = EntityState.Deleted;
+            }
+            else
+            {
+                Entities.Attach(entity);
+                Entities.Remove(entity);
+            }
+        }
+
+        public TEntity Delete(object id)
+        {
+            var entity = GetById(id);
+
+            if (entity == null)
+                return null;
+
+            EntityEntry entityEntry = _context.Entry(entity);
+            if (entityEntry.State != EntityState.Deleted)
+            {
+                entityEntry.State = EntityState.Deleted;
+            }
+            else
+            {
+                Entities.Attach(entity);
+                Entities.Remove(entity);
+            }
+
+            return entity;
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter != null)
+                return Entities.Count(filter);
+
+            return Entities.Count();
+        }
+
+        public IEnumerable<TEntity> Paging(
+            Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Expression<Func<TEntity, object>>[] includes = null,
             int? page = null,
@@ -157,6 +252,16 @@ namespace Application.Core.Concrete
         public bool IsExist(Expression<Func<TEntity, bool>> predicate)
         {
             return Entities.Any(predicate);
+        }
+
+        public void AddRange(IEnumerable<TEntity> entities)
+        {
+            Entities.AddRange(entities);
+        }
+
+        public void DeleteRange(IEnumerable<TEntity> entities)
+        {
+            Entities.RemoveRange(entities);
         }
     }
 }
