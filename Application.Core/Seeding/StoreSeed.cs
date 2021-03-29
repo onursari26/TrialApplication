@@ -13,7 +13,7 @@ namespace Application.Core.Seeding
         {
             var store = new Store
             {
-                StoreId = 37814,
+                Id = 37814,
                 Name = "Stock Mount",
                 Description = "Stock Mount",
             };

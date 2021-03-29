@@ -31,7 +31,7 @@ namespace Application.Core.Seeding
 
             var store = new Store
             {
-                StoreId = 37814,
+                Id = 37814,
                 Name = "Stock Mount",
                 Description = "Stock Mount",
             };
@@ -40,7 +40,7 @@ namespace Application.Core.Seeding
 
             var store2 = new Store
             {
-                StoreId = 37815,
+                Id = 37815,
                 Name = "Stock Mount",
                 Description = "Stock Mount",
             };
@@ -49,7 +49,7 @@ namespace Application.Core.Seeding
 
             var store3 = new Store
             {
-                StoreId = 37816,
+                Id = 37816,
                 Name = "Stock Mount",
                 Description = "Stock Mount",
             };
@@ -94,7 +94,7 @@ namespace Application.Core.Seeding
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    StoreId = store.StoreId,
+                    StoreId = store.Id,
                     IntegrationProductCode = "112576403",
                     IntegrationOrderDetailId = "37726242",
                     ProductName = "FIRAT Thermo Kauçuk Bezli Sulama Hortumu 1\" - 50 Metre",
@@ -123,7 +123,7 @@ namespace Application.Core.Seeding
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    StoreId = store.StoreId,
+                    StoreId = store.Id,
                     IntegrationProductCode = "119072276",
                     IntegrationOrderDetailId = "37726244",
                     ProductName = "WERT 2251 Saatçi Tornavida Seti 6 Parça",
@@ -153,7 +153,7 @@ namespace Application.Core.Seeding
 
                 order.OrderDetails.Add(new OrderDetail
                 {
-                    StoreId = store.StoreId,
+                    StoreId = store.Id,
                     IntegrationProductCode = "94191960",
                     IntegrationOrderDetailId = "37726243",
                     ProductName = "CETA FORM 4000M/7ST1 7 Parça Tornavida Takımı - Tornavida Seti",

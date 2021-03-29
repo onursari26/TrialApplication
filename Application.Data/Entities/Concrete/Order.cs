@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 namespace Application.Data.Entities.Concrete
 {
-    public class Order 
+    public class Order : Entity
     {
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
         }
-        public int OrderId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PersonalIdentification { get; set; }
@@ -31,7 +30,7 @@ namespace Application.Data.Entities.Concrete
         public string CompanyTitle { get; set; }
         public string Member { get; set; }
         public string PaymentType { get; set; }
-        public int StoreId { get; set; }
+        public long StoreId { get; set; }
         public string Email { get; set; }
         public Store Store { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }

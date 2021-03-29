@@ -61,7 +61,7 @@ namespace Application.Security.Jwt.Concrete
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, $"{ user.Name} { user.Surname}"),
+                new Claim(ClaimTypes.Name, user.NameSurname),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

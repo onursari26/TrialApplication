@@ -13,14 +13,13 @@ namespace Application.Dto.Concrete
             OrderDetails = new HashSet<OrderDetailDto>();
         }
         public int OrderId { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string NameSurname { get; set; }
         public string PersonalIdentification { get; set; }
         public string Nickname { get; set; }
         public DateTime OrderDate { get; set; }
         public string IntegrationOrderCode { get; set; }
-        public string OrderStatus { get; set; }
-        public int InvoiceStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; }
+        public InvoiceStatus InvoiceStatus { get; set; }
         public string Fullname { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }

@@ -8,7 +8,7 @@ namespace Application.Core.Mappings
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(c => c.UserId).IsRequired();
+            builder.Property(c => c.Id).IsRequired();
             builder.Property(c => c.Username).IsRequired();
             builder.Property(c => c.PasswordHash).IsRequired();
             builder.Property(c => c.PasswordSalt).IsRequired();

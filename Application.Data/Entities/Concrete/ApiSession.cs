@@ -3,11 +3,12 @@ using System;
 
 namespace Application.Data.Entities.Concrete
 {
-    public class ApiSession : Entity
+    public class ApiSession : IEntity
     {
         public int Id { get; set; }
         public DateTime PackageEndDate { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public User User { get; set; }
+        public string ApiCode { get; set; }
     }
 }

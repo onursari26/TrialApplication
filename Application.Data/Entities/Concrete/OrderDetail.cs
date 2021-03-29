@@ -3,11 +3,10 @@ using System;
 
 namespace Application.Data.Entities.Concrete
 {
-    public class OrderDetail
+    public class OrderDetail : Entity
     {
-        public int StoreId { get; set; }
-        public int OrderDetailId { get; set; }
-        public int OrderId { get; set; }
+        public long StoreId { get; set; }
+        public long OrderId { get; set; }
         public int ProductId { get; set; }
         public string IntegrationProductCode { get; set; }
         public string IntegrationOrderDetailId { get; set; }
@@ -59,6 +58,6 @@ namespace Application.Data.Entities.Concrete
         public string ProductVariantCode { get; set; }
         public Order Order { get; set; }
 
-      
+
     }
 }

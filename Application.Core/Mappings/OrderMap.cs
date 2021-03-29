@@ -8,7 +8,7 @@ namespace Application.Core.Mappings
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.Property(c => c.OrderId).IsRequired();
+            builder.Property(c => c.Id).IsRequired();
 
             builder.HasOne(d => d.Store)
                    .WithMany(p => p.Orders)

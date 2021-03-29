@@ -8,7 +8,7 @@ namespace Application.Core.Mappings
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
-            builder.Property(c => c.StoreId).IsRequired();
+            builder.Property(c => c.Id).IsRequired();
         }
     }
 }
