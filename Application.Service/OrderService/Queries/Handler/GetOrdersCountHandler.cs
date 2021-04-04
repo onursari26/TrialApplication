@@ -19,7 +19,7 @@ namespace Application.Service.OrderService.Queries.Handler
 
         public async Task<ResponseInfo<int>> Handle(GetOrdersCount request, CancellationToken cancellationToken)
         {
-            return new ResponseInfo<int> { Response = await _uow.Repository<Order>().CountAsync() };
+            return new ResponseInfo<int> { Data = await _uow.Repository<Order>().CountAsync() };
         }
     }
 }

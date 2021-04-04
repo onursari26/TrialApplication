@@ -1,24 +1,14 @@
 ﻿using Application.Dto.Enums;
-using Application.Dto.ExceptionExtensions;
-using Application.Dto.Extensions;
+using Application.Utility.Extensions;
 using System;
 using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Application.Dto.Response
 {
     public class ResponseInfo<T>
     {
-        public bool Result { get; set; } = true;
-        public string Message
-        {
-            get
-            {
-                if ((int)errorCode == 0)
-                    return null;
-
-                return errorCode.GetDisplayAttribute().Name;
-            }
-        }
+        public bool IsSuccessfull { get; set; } = true;
 
         private string errorMessage;
         public string ErrorMessage
@@ -31,43 +21,23 @@ namespace Application.Dto.Response
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    this.Result = false;
+                    this.IsSuccessfull = false;
                     this.errorMessage = value;
-                    this.errorCode = Enums.ErrorCode.Error;
                 }
             }
         }
-
-        private ErrorCode errorCode;
-        public string ErrorCode
-        {
-            get
-            {
-                if ((int)errorCode == 0)
-                    return null;
-
-                return ((int)errorCode).ToString();
-            }
-            set
-            {
-                this.ErrorCode = value;
-            }
-        }
-        public T Response { get; set; }
+        public T Data { get; set; }
 
         private int count;
         public int Count
         {
             get
             {
-                this.count = this.Result && this.Response != null ? 1 : 0;
+                this.count = this.IsSuccessfull && this.Data != null ? 1 : 0;
 
-                ICollection col = this.Response as ICollection;
+                ICollection col = this.Data as ICollection;
                 if (col != null)
                     this.count = col.Count;
-
-                if (this.count == 0)
-                    this.errorCode = Enums.ErrorCode.Warning;
 
                 return count;
             }
@@ -90,10 +60,9 @@ namespace Application.Dto.Response
             {
                 if (value != null)
                 {
-                    this.Result = false;
+                    this.IsSuccessfull = false;
                     this.exception = value;
-                    this.ErrorMessage = value.InnerExceptionMessage();
-                    this.errorCode = Enums.ErrorCode.Error;
+                    this.ErrorMessage = value.GetInnerExceptionMessage();
                 }
             }
         }
@@ -113,6 +82,5 @@ namespace Application.Dto.Response
                 this.totalCount = value;
             }
         }
-
     }
 }

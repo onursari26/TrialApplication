@@ -38,7 +38,7 @@ namespace Application.Service.OrderService.Queries.Handler
 
             return new ResponseInfo<List<OrderDto>>
             {
-                Response = _mapper.Map<List<OrderDto>>(orders),
+                Data = _mapper.Map<List<OrderDto>>(orders),
                 TotalCount = await _uow.Repository<Order>().CountAsync(x => x.StoreId == request.StoreId && x.OrderStatus == request.OrderStatus && x.InvoiceStatus == request.InvoiceStatus)
             };
         }

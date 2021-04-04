@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Logging.Middleware
+namespace Application.Utility.StaticMethods
 {
     public static class AppServiceLocator
     {

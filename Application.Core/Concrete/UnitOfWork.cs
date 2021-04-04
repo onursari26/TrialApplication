@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
+using Application.Utility.StaticMethods;
 
 namespace Application.Core.Concrete
 {
@@ -36,20 +37,21 @@ namespace Application.Core.Concrete
         public async Task<int> SaveChangesAsync(TransactionScopeOption required = TransactionScopeOption.Required,
             IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            using (TransactionScope transactionScope = new TransactionScope(required, new TransactionOptions { IsolationLevel = isolationLevel }, TransactionScopeAsyncFlowOption.Enabled))
+            using (TransactionScope transactionScope = new(required, new TransactionOptions { IsolationLevel = isolationLevel }, TransactionScopeAsyncFlowOption.Enabled))
             {
-                //var entities = _dbContext.ChangeTracker.Entries().Where(x => x.Entity is Entity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+                var entities = _dbContext.ChangeTracker.Entries().Where(x => x.Entity is Entity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
-                //foreach (var entity in entities)
-                //{
-                //    if (entity.State == EntityState.Added)
-                //    {
-                //        ((Entity)entity.Entity).CreatedDate = DateTime.UtcNow;
-                //    }
+                foreach (var entity in entities)
+                {
+                    if (entity.State == EntityState.Added)
+                    {
+                        ((Entity)entity.Entity).CreatedDate = DateTime.Now;
+                        ((Entity)entity.Entity).CreatedBy = CurrentUser.GetCurrentUserName();
+                    }
 
-                //      ((Entity)entity.Entity).ModifiedDate = DateTime.UtcNow;
-                //}
-
+                    ((Entity)entity.Entity).ModifiedDate = DateTime.Now;
+                    ((Entity)entity.Entity).ModifiedBy = CurrentUser.GetCurrentUserName();
+                }
 
                 var saveChangeResponse = await _dbContext.SaveChangesAsync().ConfigureAwait(false);
                 transactionScope.Complete();

@@ -21,12 +21,12 @@ namespace Application.Service.AuthService.Concrete
 
         public async Task<ResponseInfo<UserDto>> CreateApiCode(ResponseInfo<UserDto> user)
         {
-            var session = await _uow.Repository<ApiSession>().FindAsync(x => x.PackageEndDate >= DateTime.UtcNow && x.UserId == user.Response.UserId);
+            var session = await _uow.Repository<ApiSession>().FindAsync(x => x.PackageEndDate >= DateTime.UtcNow && x.UserId == user.Data.UserId);
             if (session == null)
-                session = await AddApiSession(user.Response.UserId);
+                session = await AddApiSession(user.Data.UserId);
 
-            user.Response.ApiCode = session.ApiCode;
-            user.Response.PackageEndDate = session.PackageEndDate;
+            user.Data.ApiCode = session.ApiCode;
+            user.Data.PackageEndDate = session.PackageEndDate;
 
             return user;
         }

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Application.Dto.Extensions
+namespace Application.Utility.Extensions
 {
-    public static class EnumExtensions
+    public static class Enums
     {
         public static DisplayAttribute GetDisplayAttribute(this Enum _mAt)
         {

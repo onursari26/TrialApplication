@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Utility.StaticMethods;
+using Microsoft.AspNetCore.Http;
 using Serilog.Core;
 using System;
 using System.Diagnostics;

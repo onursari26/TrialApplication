@@ -20,7 +20,7 @@ namespace Application.Service.LogService.Queries.Handler
 
             ResponseInfo<List<LogDto>> result = new ResponseInfo<List<LogDto>>
             {
-                Response = new List<LogDto>()
+                Data = new List<LogDto>()
             };
 
             if (!File.Exists(path))
@@ -37,20 +37,20 @@ namespace Application.Service.LogService.Queries.Handler
 
                     while (row != null)
                     {
-                        result.Response.Add(JsonConvert.DeserializeObject<LogDto>(row));
+                        result.Data.Add(JsonConvert.DeserializeObject<LogDto>(row));
 
                         row = await streamReader.ReadLineAsync();
                     }
                 }
             }
 
-            if (result.Response.Count == 0)
+            if (result.Data.Count == 0)
                 return result;
 
-            result.TotalCount = result.Response.Count;
+            result.TotalCount = result.Data.Count;
 
             if (request.Page != 0 && request.PageSize != 0)
-                result.Response = result.Response.Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToList();
+                result.Data = result.Data.Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).ToList();
 
             return result;
         }

@@ -41,7 +41,7 @@ namespace Application.Service.AuthService.Commands.Handler
                 return result;
             }
 
-            result.Response = _mapper.Map<UserDto>(user);
+            result.Data = _mapper.Map<UserDto>(user);
 
             return result;
         }

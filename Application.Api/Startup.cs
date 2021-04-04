@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Application.Logging.Middleware;
 using Microsoft.AspNetCore.Http;
 using Application.Core.Seeding;
+using Application.Utility.StaticMethods;
 
 namespace Application.Api
 {

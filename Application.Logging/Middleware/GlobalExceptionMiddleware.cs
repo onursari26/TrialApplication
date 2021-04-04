@@ -2,12 +2,12 @@
 using Microsoft.IO;
 using Newtonsoft.Json;
 using Serilog;
-using Application.Dto.ExceptionExtensions;
 using Application.Dto.Response;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Application.Utility.Extensions;
 
 namespace Application.Logging.Middleware
 {
@@ -44,7 +44,7 @@ namespace Application.Logging.Middleware
             ResponseInfo<object> result = new ResponseInfo<object>
             {
                 Exception = ex,
-                ErrorMessage = ex.InnerExceptionMessage()
+                ErrorMessage = ex.GetInnerExceptionMessage()
             };
 
             var responseBody = JsonConvert.SerializeObject(result);

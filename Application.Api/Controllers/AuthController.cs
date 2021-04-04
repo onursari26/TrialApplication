@@ -27,7 +27,7 @@ namespace Application.Api.Controllers
         {
             var user = await _mediator.Send(request);
 
-            if (!user.Result)
+            if (!user.IsSuccessfull)
                 return Ok(user);
 
             user = await _authService.CreateApiCode(user);
